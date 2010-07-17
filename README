@@ -1,0 +1,27 @@
+Getting and building it:
+------------------------
+
+		git clone git@github.com:epronk/python-blog.git
+		git clone git@github.com:epronk/python-blog-content.git
+
+
+To bootstrap the environment.
+-----------------------------
+
+This creates a virtual env.
+Installs make and markdown2.
+
+		cd python-blog-content
+		./bootstrap
+
+
+Build the content
+-----------------
+
+		make compile
+
+
+Deploy the content to the ISP
+-----------------------------
+
+		make deploy
