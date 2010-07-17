@@ -1,0 +1,109 @@
+I bought a 1.5Tbyte My Book Essential external USB drive from Western
+Digital. The box does not say what drive is inside and the USB
+interface does not reveal it either. Creating the ext3 file system
+took surprisingly long. I remember reading about the performance hit
+of the new WD Caviar drives, but I didn't expect to be affected by
+this because I thought the USB interface would be the bottleneck
+anyway, which is an incorrect assumption.
+
+Hard disk drive manufacturers are in transition from 512 bytes per
+sector to 4096 bytes per sector. The larger sector size is referred to
+as [Advanced Format][2] or [Bigsector][3]. Big words to create
+awareness for the transition.
+
+I tried aligning the partition as described in [this][4] excellent
+article. I did some tests, with and without alignment. The results are
+below.
+
+[1]: http://www.wdc.com/en/products/products.asp?driveid=729
+[2]: http://www.wdc.com/en/products/advancedformat/
+[3]: http://www.bigsector.org/
+[4]: http://www.osnews.com/story/22872/Linux_Not_Fully_Prepared_for_4096-Byte_Sector_Hard_Drives
+
+Difference for large files:
+---------------------------
+
+### Without alignment: ###
+
+    epronk@godiva:~$ time cp largefilemedia/disk/
+
+    real  10m44.546s
+    user    0m0.332s
+    sys    0m32.430s
+
+### With alignment: ###
+
+    epronk@godiva:~$ time cp largefile /media/disk/
+
+    real   8m49.902s
+    user    0m0.412s
+    sys    0m36.746s
+
+Difference for raw writes:
+--------------------------
+
+These are raw write operations on an empty disk, but with taking the
+file system (ext3) into consideration. The difference with copying a
+large file is there is no reading of a source file part of the
+operation.
+
+### Without alignment: ###
+
+    epronk@godiva:~$ time dd if=/dev/zero of=/media/disk/test bs=1024 count=$[1024*1024]
+    
+	1048576+0 records in
+	1048576+0 records out
+	1073741824 bytes (1.1 GB) copied, 39.225 s, 27.4 MB/s
+	
+### With alignment: ###
+	
+    epronk@godiva:~$ time dd if=/dev/zero of=/media/disk/test bs=1024 count=$[1024*1024]
+
+	1048576+0 records in
+	1048576+0 records out
+	1073741824 bytes (1.1 GB) copied, 32.5642 s, 33.0 MB/s
+
+3.4Gbyte of small/medium sized files:
+------------------------------------
+
+This is a collection of small files (source files / object files /
+libraries etc.) which I think is more typical usage of the disk.
+
+### Without alignment: ###
+
+    epronk@godiva:~$ time cp -a src /media/disk/
+	
+    real   48m16.739s
+    user     0m2.996s
+    sys     0m48.459s
+
+### With alignment: ###
+
+    epronk@godiva:~$ time cp -a src /media/disk
+
+    real    7m59.009s
+    user     0m3.300s
+    sys     0m54.071s
+
+The partition table:
+--------------------
+
+This is what my partition table for the drive looks like. The
+important part is the first partition needs to start at sector 64 (this has
+to be a multiple of 4098/512 = 8) instead of sector 63 which is the default.
+
+    Expert command (m for help): p
+
+    Disk /dev/sdb: 255 heads, 63 sectors, 182315 cylinders
+
+    Nr AF  Hd Sec  Cyl  Hd Sec  Cyl     Start      Size ID
+     1 00   1   1    0 254  63 1023         64 2928890411 83
+     2 00   0   0    0   0   0    0          0          0 00
+     3 00   0   0    0   0   0    0          0          0 00
+     4 00   0   0    0   0   0    0          0          0 00
+
+Conclusion:
+-----------
+
+If you decide to re-partition and format the drive you need to be aware of this. The difference for raw writes or large files is significant, but for copying a large set of files the difference is huge. A *factor 6* faster was a surprising result.
+

@@ -1,0 +1,7 @@
+<p>A few years ago I&#8217;ve used libdbi in a C++ application to talk to MySQL and SQLite. At the time there was not much development being done in libdbi. In my current job we use Sybase on Solaris and I wanted to do development on one of their applications on Linux. I tried libdbi with the freetds driver.</p>
+<p>There was a problem with conversion of VARCHAR to C string. If a field contained exactly the maximum number of characters specified by VARCHAR, the conversion would fail because there was not enough allocated to store the trailing 0 character.<br />
+I&#8217;ve submitted patches to both libdbi-drivers and freetds. The patch in freetds was not accepted but did result in some changes in the code doing the conversion. A second patch in libdbi-drivers fixed the problem.</p>
+<p><a href="http://article.gmane.org/gmane.comp.db.libdbi.drivers/221">patch 1</a><br />
+
+<a href="http://article.gmane.org/gmane.comp.db.libdbi.drivers/225">patch 2</a><br />
+<a href="http://lists.ibiblio.org/pipermail/freetds/2008q3/date.html">discussion on freetds list</a></p>

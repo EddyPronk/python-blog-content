@@ -1,0 +1,8 @@
+<p>This week I installed Debian on my notebook just to find out how this would be different. My first attempt to use Debian was in 2000 with the release of &#8216;potato&#8217;. I installed &#8216;Etch&#8217; using &#8216;expertgui&#8217;. My HP Pavillion dv1159ea has &#8220;Intel PRO/Wireless 2200BG&#8221; which was not installed.</p>
+
+<p>sudo apt-get install ipw2200-modules-2.6.18-6-686</p>
+<p>the dmesg output said something like:</p>
+<p>ipw2200: ipw2200-bss.fw request_firmware failed: Reason -2</p>
+<p>This means the driver tries to send the firmware file to the device, which is not being distributed by Debian.</p>
+<p>http://ipw2200.sourceforge.net/README.ipw2200 explains how to obtain a working firmware. After rebooting, the wireless worked.</p>
+<p>I did a dist-upgrade to lenny (testing) which should be stable enough for my usage.</p>

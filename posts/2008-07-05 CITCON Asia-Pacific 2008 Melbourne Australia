@@ -1,0 +1,31 @@
+<p>Last weekend I went to CITCON (Continuous Integration and Testing Conference) which was held in Jasper Hotel, Melbourne.<br />
+Some thoughts about what we can do with the things I heard at this conference:</p>
+<p>Get testers and product managers involved in writing acceptation tests for stories:</p>
+<ul>
+<li>By using something like Fit and Fitnesse.</li>
+<li>Write test cases for stories in a human readable format and execute them automatically.</li>
+<li>Make the automated integration tests more accessible by improving reporting so it is easier to read what the tests are really doing.</li>
+<li>Separate tests &#8220;what&#8221; and fixtures &#8220;how&#8221;.</li>
+
+</ul>
+<p>About unit tests I heard some interesting statements:</p>
+<ul>
+<li>Fast running tests are unit tests. Slow running tests are integration tests.</li>
+<li>If you can&#8217;t run 100 test per second you&#8217;re doing it wrong.</li>
+<li>Unit test don&#8217;t touch the filesystem and have stuff like databases mocked out.</li>
+</ul>
+<p>A lot of projects suffer from problems with performance testing.</p>
+<ul>
+
+<li>not doing any</li>
+<li>deploy systems a production environment where load is 50 to 500 times higher then tested.</li>
+</ul>
+<p>Measure test coverage to find out:</p>
+<ul>
+<li>How confident we should really feel about having automated tests.</li>
+<li>How we can reduce duplication of work between automated tests and QA testing.</li>
+<li>Measure complexity as part of the automated build to find out where refactoring would help to increase test coverage.</li>
+</ul>
+<p>Record and playback on protocol level is a common practice for performance testing and reproducing production problems. I&#8217;ve been doing this kind of stuff recently</p>
+
+<p>I can recommend going there next year. This conference is free.</p>

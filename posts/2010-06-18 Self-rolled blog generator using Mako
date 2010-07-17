@@ -1,0 +1,48 @@
+Over the last few days I've moved my blog from wordpress to a
+self-rolled blog software written in Python. The reason for moving
+away from [WordPress][1] is that I want to be able to edit a local
+copy of my content using an editor instead of doing it inside a
+browser. I also want to be able to use version control and tools like
+grep.
+
+Before doing this I've looked at some existing systems and I started
+to wonder more and more how hard it would be to roll my own blog
+system, of course making use of existing components that do the work.
+
+The first alternative I looked at was [ikiwiki][2], a wiki
+compiler. Ikiwiki generates static content from text files using
+markdown. You can set it up as a blog system and has a module for
+leaving comments. I want to use a comment module but had a bad
+experience with wiki and blog spam. More over, my provider uses
+mod_perl which is not yet supported by ikiwiki.
+
+Then, I came across [this][3] post about blogging with Git, Emacs, and
+[Jekyll][4]. Jekyll is written in Ruby and uses the Liquid template
+system. The Python port of Jekyll is named [Hyde][5] and uses Django
+templates. Anyway, this combination of tools seems powerful, but I got
+overwhelmed with the amount of technology I'm not familiar with. Yet,
+in the back of my mind I was still convinced I could make it simpler
+than that. So I though to myself, why not start from scratch and use a
+template system I am familiar with. And that's how [Mako][6] enters
+the picture. I started playing with Mako and with 50 lines of Python
+and a few simple templates I now have a blog with the most basic
+features.
+
+Features:
+
+* Posts are stored as individual [Markdown][7] files.
+* A home page with the first n posts.
+* Integrates with [Disqus][8] comment system.
+* W3C compliant. Checked as XHTML 1.0 Strict.
+
+[1]: http://wordpress.org/
+[2]: http://ikiwiki.info/
+     "wiki compiler"
+[3]: http://metajack.im/2009/01/23/blogging-with-git-emacs-and-jekyll/
+     "blogging with git emacs and jekyll"
+[4]: http://jekyllrb.com/
+     "Jekyll is a blog-aware, static site generator in Ruby."
+[5]: http://github.com/blog/342-hyde-the-python-static-site-generator
+[6]: http://www.makotemplates.org/
+[7]: http://daringfireball.net/projects/markdown/
+[8]: http://disqus.com/
